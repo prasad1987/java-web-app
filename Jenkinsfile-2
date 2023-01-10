@@ -23,7 +23,7 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true, 
-                    reportDir: '.',
+                    reportDir: '/var/lib/jenkins/workspace/Docker_scan_job1/',
                     reportName: 'CVE-REPORT',
                     reportFiles: 'cve_report.html',
                  ]) 
