@@ -11,20 +11,22 @@ pipeline {
     }
     stage('Scan') {
       steps {
-        sh 'trivy image  --format template --template /report/html.tpl  --output scan.html --severity HIGH,CRITICAL darinpope/java-web-app:latest'
+        sh 'trivy image  --format template --template /report/html.tpl  --output cve_report.html --severity HIGH,CRITICAL darinpope/java-web-app:latest'
       }
     }
   }
   post {
         always {  
-            publishHTML target: [
-                reportName: 'CVE-REPORT',
-                reportFiles: 'scan.html', 
-                reportDir: '.',
-                keepAll: true,
-                alwaysLinkToLastBuild: true,
-                allowMissing: false
-            ]  
+                archiveArtifacts artifacts: 'cve_report.html', fingerprint: true
+                
+                publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true, 
+                    reportDir: '.',
+                    reportName: 'CVE-REPORT',
+                    reportFiles: 'cve_report.html',
+                 ]) 
         }
     }
 }
