@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Scan') {
       steps {
-        sh 'trivy image  --format template --template /report/html.tpl  --output cve_report.html --severity HIGH,CRITICAL darinpope/java-web-app:latest'
+        sh 'trivy image  --format template --template /report/ --output cve_report.html --severity HIGH,CRITICAL darinpope/java-web-app:latest'
       }
     }
   }
@@ -23,7 +23,7 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true, 
-                    reportDir: '/var/lib/jenkins/workspace/Docker_scan_job1/',
+                    reportDir: './',
                     reportName: 'CVE-REPORT',
                     reportFiles: 'cve_report.html',
                  ]) 
